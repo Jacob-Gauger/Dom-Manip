@@ -28,6 +28,7 @@ function showAddNew() {
     }
 }
 
+// Object chaining is the only way I could figure this out
 function filterArticles() {
     const opinion = document.getElementById('opinionCheckbox')?.checked ?? true;
     const recipe = document.getElementById('recipeCheckbox')?.checked ?? true;
@@ -43,16 +44,17 @@ function filterArticles() {
 }
 
 function addNewArticle() {
-    const titleEl = document.getElementById('inputHeader');
-    const textEl = document.getElementById('inputArticle');
+    const titleID = document.getElementById('inputHeader');
+    const textID = document.getElementById('inputArticle');
     
-    if (!titleEl || !textEl) return;
+    if (!titleID || !textID) return;
 
-    const title = titleEl.value.trim();
-    const text = textEl.value.trim();
+    const title = titleID.value.trim();
+    const text = textID.value.trim();
 
     let type = '';
     
+    // Prints a warning if there's something in the add article left blank
     if (document.getElementById('opinionRadio')?.checked) type = 'opinion';
     else if (document.getElementById('recipeRadio')?.checked) type = 'recipe';
     else if (document.getElementById('lifeRadio')?.checked) type = 'update';
@@ -66,9 +68,9 @@ function addNewArticle() {
     if (!list) return;
 
     const count = list.querySelectorAll('article').length;
-    const art = document.createElement('article');
-    art.className = type;
-    art.id = 'a' + (count + 1);
+    const article = document.createElement('article');
+    article.className = type;
+    article.id = 'a' + (count + 1);
 
     const span = document.createElement('span');
     span.className = 'marker';
@@ -82,19 +84,20 @@ function addNewArticle() {
 
     const p2 = document.createElement('p');
     const a = document.createElement('a');
+    
     a.href = 'moreDetails.html';
     a.textContent = 'Read more...';
     p2.appendChild(a);
 
-    art.appendChild(span);
-    art.appendChild(h2);
-    art.appendChild(p);
-    art.appendChild(p2);
+    article.appendChild(span);
+    article.appendChild(h2);
+    article.appendChild(p);
+    article.appendChild(p2);
 
-    list.appendChild(art);
+    list.appendChild(article);
 
-    titleEl.value = '';
-    textEl.value = '';
+    titleID.value = '';
+    textID.value = '';
     const radios = document.querySelectorAll('input[name="articleType"]');
     radios.forEach(r => r.checked = false);
 
